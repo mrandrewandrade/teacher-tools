@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { handleRequest } from "../src/worker.mjs";
+import { handleRequest, parseRedirectCsv } from "../src/worker.mjs";
 
 class MemoryKv {
   constructor() { this.values = new Map(); }
@@ -55,14 +55,14 @@ test("creates a branch, mapping commit, and pull request", async (context) => {
   let committedManifest;
   globalThis.fetch = async (url, init = {}) => {
     calls.push({ url: String(url), method: init.method || "GET", body: init.body });
-    if (String(url).includes("/contents/redirects.json?") && !init.method) {
-      return Response.json({ sha: "file-sha", content: encode(JSON.stringify({ baseUrl: "https://andrewandrade.ca/go/", links: {} })) });
+    if (String(url).includes("/contents/redirects.csv?") && !init.method) {
+      return Response.json({ sha: "file-sha", content: encode("slug,destination\n") });
     }
     if (String(url).includes("/git/ref/heads/main")) return Response.json({ object: { sha: "base-sha" } });
     if (String(url).endsWith("/git/refs")) return Response.json({ ref: "refs/heads/test" }, { status: 201 });
-    if (String(url).endsWith("/contents/redirects.json") && init.method === "PUT") {
+    if (String(url).endsWith("/contents/redirects.csv") && init.method === "PUT") {
       const body = JSON.parse(init.body);
-      committedManifest = JSON.parse(decodeURIComponent(escape(atob(body.content))));
+      committedManifest = parseRedirectCsv(decodeURIComponent(escape(atob(body.content))));
       return Response.json({ commit: { sha: "commit-sha" } });
     }
     if (String(url).endsWith("/pulls")) return Response.json({ number: 17, html_url: "https://github.com/mrandrewandrade/go/pull/17" }, { status: 201 });
@@ -82,17 +82,14 @@ test("updates an existing slug rather than changing its permanent URL", async (c
   const previousFetch = globalThis.fetch;
   let committedManifest;
   globalThis.fetch = async (url, init = {}) => {
-    if (String(url).includes("/contents/redirects.json?") && !init.method) {
-      return Response.json({ sha: "file-sha", content: encode(JSON.stringify({
-        baseUrl: "https://andrewandrade.ca/go/",
-        links: { "learning-skills-form": "https://example.org/forms/old" },
-      })) });
+    if (String(url).includes("/contents/redirects.csv?") && !init.method) {
+      return Response.json({ sha: "file-sha", content: encode("slug,destination\nlearning-skills-form,https://example.org/forms/old\n") });
     }
     if (String(url).includes("/git/ref/heads/main")) return Response.json({ object: { sha: "base-sha" } });
     if (String(url).endsWith("/git/refs")) return Response.json({}, { status: 201 });
-    if (String(url).endsWith("/contents/redirects.json") && init.method === "PUT") {
+    if (String(url).endsWith("/contents/redirects.csv") && init.method === "PUT") {
       const body = JSON.parse(init.body);
-      committedManifest = JSON.parse(decodeURIComponent(escape(atob(body.content))));
+      committedManifest = parseRedirectCsv(decodeURIComponent(escape(atob(body.content))));
       return Response.json({});
     }
     if (String(url).endsWith("/pulls")) return Response.json({ number: 18, html_url: "https://github.com/mrandrewandrade/go/pull/18" }, { status: 201 });

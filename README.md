@@ -17,7 +17,7 @@ npm run test:all
 
 ## Pull-request integration
 
-The static site never receives a GitHub token. `worker/` contains the server-side OAuth and GitHub API integration; see [`worker/README.md`](worker/README.md) for the remaining live Cloudflare and OAuth setup. Until `site/config.js` has a deployed `prApiBase`, the page clearly reports that PR creation is not configured while QR creation remains fully available.
+Short-link mappings are maintained in `go/redirects.csv`; the `go` build generates the public JSON used by this page. The static site never receives a GitHub token. `worker/` contains the server-side OAuth and GitHub API integration that proposes CSV changes; see [`worker/README.md`](worker/README.md) for the remaining live Cloudflare and OAuth setup. Until `site/config.js` has a deployed `prApiBase`, the page clearly reports that PR creation is not configured while QR creation remains fully available.
 
 ## Initial Pages setup
 

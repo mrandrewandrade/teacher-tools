@@ -1,6 +1,6 @@
 # Pull-request service
 
-This Cloudflare Worker keeps GitHub credentials out of the static site. It uses GitHub OAuth, restricts access to configured GitHub users, stores short-lived server-side sessions in KV, checks CSRF and request origin, edits `go/redirects.json` on a branch, and opens a pull request.
+This Cloudflare Worker keeps GitHub credentials out of the static site. It uses GitHub OAuth, restricts access to configured GitHub users, stores short-lived server-side sessions in KV, checks CSRF and request origin, edits `go/redirects.csv` on a branch, and opens a pull request.
 
 ## Live setup
 

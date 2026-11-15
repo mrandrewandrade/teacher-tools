@@ -3,6 +3,7 @@ const SESSION_TTL_SECONDS = 8 * 60 * 60;
 const OAUTH_STATE_TTL_SECONDS = 10 * 60;
 const RESERVED_SLUGS = new Set(["404", "assets", "favicon", "health", "index", "redirects", "robots"]);
 const SLUG_PATTERN = /^[a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?$/;
+const DEFAULT_SHORT_BASE_URL = "https://andrewandrade.ca/go/";
 
 function allowedOrigin(request, env) {
   const origin = request.headers.get("Origin") || "";
@@ -66,6 +67,68 @@ function base64DecodeUtf8(value) {
   const binary = atob(value.replace(/\s/g, ""));
   const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
   return new TextDecoder().decode(bytes);
+}
+
+export function parseRedirectCsv(text, baseUrl = DEFAULT_SHORT_BASE_URL) {
+  const rows = [];
+  let row = [];
+  let field = "";
+  let quoted = false;
+
+  for (let index = 0; index < text.length; index += 1) {
+    const character = text[index];
+    if (quoted) {
+      if (character === '"' && text[index + 1] === '"') {
+        field += '"';
+        index += 1;
+      } else if (character === '"') {
+        quoted = false;
+      } else {
+        field += character;
+      }
+    } else if (character === '"' && field === "") {
+      quoted = true;
+    } else if (character === ",") {
+      row.push(field);
+      field = "";
+    } else if (character === "\n") {
+      row.push(field.replace(/\r$/, ""));
+      rows.push(row);
+      row = [];
+      field = "";
+    } else {
+      field += character;
+    }
+  }
+  if (quoted) throw new Error("redirects.csv contains an unterminated quoted field.");
+  if (field !== "" || row.length) {
+    row.push(field.replace(/\r$/, ""));
+    rows.push(row);
+  }
+
+  const header = rows.shift()?.map((value) => value.replace(/^\uFEFF/, "").trim().toLowerCase());
+  if (!header || header.length !== 2 || header[0] !== "slug" || header[1] !== "destination") {
+    throw new Error("redirects.csv must start with exactly: slug,destination");
+  }
+  const entries = rows
+    .filter((values) => !values.every((value) => value.trim() === ""))
+    .map((values, index) => {
+      if (values.length !== 2) throw new Error(`CSV row ${index + 2} must have exactly two columns.`);
+      return [values[0].trim(), values[1].trim()];
+    });
+  const duplicates = entries.find(([slug], index) => entries.findIndex(([other]) => other.toLowerCase() === slug.toLowerCase()) !== index);
+  if (duplicates) throw new Error(`The slug "${duplicates[0]}" appears more than once in redirects.csv.`);
+  return { baseUrl, links: Object.fromEntries(entries) };
+}
+
+function csvField(value) {
+  const text = String(value);
+  return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
+}
+
+export function serializeRedirectCsv(manifest) {
+  const rows = [["slug", "destination"], ...Object.entries(manifest.links).sort(([a], [b]) => a.localeCompare(b))];
+  return `${rows.map((values) => values.map(csvField).join(",")).join("\n")}\n`;
 }
 
 function validateProposal(input, manifest) {
@@ -183,8 +246,8 @@ async function createPullRequest(request, env, session, origin) {
   const baseBranch = env.GITHUB_BASE_BRANCH || "main";
   const prefix = `/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repository)}`;
 
-  const content = await githubRequest(`${prefix}/contents/redirects.json?ref=${encodeURIComponent(baseBranch)}`, session, env);
-  const manifest = JSON.parse(base64DecodeUtf8(content.content));
+  const content = await githubRequest(`${prefix}/contents/redirects.csv?ref=${encodeURIComponent(baseBranch)}`, session, env);
+  const manifest = parseRedirectCsv(base64DecodeUtf8(content.content), env.SHORT_BASE_URL || DEFAULT_SHORT_BASE_URL);
   const proposal = validateProposal(await request.json(), manifest);
   const previous = manifest.links[proposal.slug];
   if (previous === proposal.destination) return json({ error: "That slug already points to this destination; no change is needed." }, 409, origin);
@@ -198,11 +261,11 @@ async function createPullRequest(request, env, session, origin) {
     method: "POST",
     body: JSON.stringify({ ref: `refs/heads/${branch}`, sha: ref.object.sha }),
   });
-  await githubRequest(`${prefix}/contents/redirects.json`, session, env, {
+  await githubRequest(`${prefix}/contents/redirects.csv`, session, env, {
     method: "PUT",
     body: JSON.stringify({
       message: `${previous ? "Update" : "Add"} short link ${proposal.slug}`,
-      content: base64EncodeUtf8(`${JSON.stringify(manifest, null, 2)}\n`),
+      content: base64EncodeUtf8(serializeRedirectCsv(manifest)),
       sha: content.sha,
       branch,
     }),
