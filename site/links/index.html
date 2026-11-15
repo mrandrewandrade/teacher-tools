@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Create high-reliability QR codes for stable andrewandrade.ca short links.">
+  <meta name="theme-color" content="#14281f">
+  <title>QR codes & short links — Teacher Tools</title>
+  <link rel="stylesheet" href="../assets/site.css">
+  <link rel="stylesheet" href="../assets/links.css">
+  <script src="../config.js"></script>
+  <script src="../assets/vendor/qr-code-styling.js"></script>
+  <script src="../assets/links.js" type="module"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="../">AA<span>/tools</span></a>
+    <a class="quiet-link" href="../">All tools</a>
+  </header>
+
+  <main class="link-page">
+    <section class="link-intro" aria-labelledby="page-title">
+      <p class="eyebrow">One address, even when the destination changes</p>
+      <h1 id="page-title">QR codes &amp; short links</h1>
+      <p class="lede">Print the stable short URL in the code. Change its destination later without replacing the QR already on a wall or worksheet.</p>
+    </section>
+
+    <div class="link-layout">
+      <section class="form-panel" aria-labelledby="details-heading">
+        <h2 id="details-heading">Link details</h2>
+        <form id="link-form" novalidate>
+          <label for="destination">Destination</label>
+          <input id="destination" name="destination" type="url" inputmode="url" autocomplete="url" placeholder="https://docs.google.com/forms/…" required>
+          <p class="field-hint">The page students should reach. HTTP and HTTPS links are supported.</p>
+
+          <label for="slug">Readable slug</label>
+          <div class="slug-field">
+            <span aria-hidden="true">andrewandrade.ca/go/</span>
+            <input id="slug" name="slug" type="text" inputmode="url" autocomplete="off" maxlength="64" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" placeholder="learning-skills-form" required>
+          </div>
+          <p class="field-hint">Lowercase letters, numbers, and single hyphens. Keep this name permanently.</p>
+
+          <div class="preview-box">
+            <span>Short URL</span>
+            <output id="short-url">https://andrewandrade.ca/go/your-slug/</output>
+            <p id="mapping-status">Checking published links…</p>
+          </div>
+
+          <fieldset>
+            <legend>QR options</legend>
+            <label class="check-row" for="include-label">
+              <input id="include-label" type="checkbox" checked>
+              <span>Print the readable URL beneath the code</span>
+            </label>
+            <label for="logo">Optional centre logo</label>
+            <input id="logo" type="file" accept="image/png,image/jpeg,image/svg+xml">
+            <p class="field-hint">PNG, JPG, or SVG up to 1 MB. The code uses high error correction and keeps the logo small.</p>
+          </fieldset>
+
+          <p id="form-error" class="notice error" role="alert" hidden></p>
+          <button class="primary" type="submit">Generate QR code</button>
+        </form>
+      </section>
+
+      <section class="qr-panel" aria-labelledby="preview-heading">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Preview</p>
+            <h2 id="preview-heading">Your code</h2>
+          </div>
+          <span class="quality-badge">High correction · quiet zone</span>
+        </div>
+        <div id="qr-stage" class="qr-stage" aria-live="polite">
+          <p id="qr-empty">Enter a destination and slug, then generate the code.</p>
+          <div id="qr-code"></div>
+          <p id="qr-label" hidden></p>
+        </div>
+        <div class="button-row">
+          <button id="copy-url" type="button" disabled>Copy URL</button>
+          <button id="download-svg" type="button" disabled>Download SVG</button>
+          <button id="download-png" type="button" disabled>Download PNG</button>
+        </div>
+        <p id="qr-message" class="status-message" aria-live="polite"></p>
+      </section>
+    </div>
+
+    <section class="proposal-panel" aria-labelledby="proposal-heading">
+      <div>
+        <p class="eyebrow">Publish through review</p>
+        <h2 id="proposal-heading">Propose this short link</h2>
+        <p>The authenticated service creates a branch and pull request in <code>mrandrewandrade/go</code>. Nothing is published until you review and merge it.</p>
+      </div>
+      <div class="proposal-actions">
+        <p id="auth-status" class="status-message" aria-live="polite">Checking GitHub authorization…</p>
+        <a id="authorize" class="button" href="#" hidden>Authorize with GitHub</a>
+        <button id="open-pr" class="primary" type="button" disabled>Open pull request</button>
+        <a id="pr-result" class="pr-result" href="#" target="_blank" rel="noopener noreferrer" hidden>Review pull request ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>QR generation stays in your browser. GitHub credentials never enter this static site.</p>
+    <a href="https://github.com/mrandrewandrade/go/blob/main/redirects.json">View redirect mappings</a>
+  </footer>
+</body>
+</html>
+

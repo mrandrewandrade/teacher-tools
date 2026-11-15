@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "teacher-tools-pr-api",
+  "main": "src/worker.mjs",
+  "compatibility_date": "2026-11-15",
+  "vars": {
+    "CLIENT_ORIGIN": "https://andrewandrade.ca",
+    "GITHUB_CALLBACK_URL": "https://teacher-tools-api.andrewandrade.ca/auth/callback",
+    "GITHUB_OWNER": "mrandrewandrade",
+    "GITHUB_REPO": "go",
+    "GITHUB_BASE_BRANCH": "main",
+    "ALLOWED_GITHUB_USERS": "mrandrewandrade"
+  },
+  "kv_namespaces": [
+    { "binding": "SESSIONS", "id": "REPLACE_WITH_KV_NAMESPACE_ID" }
+  ]
+}
+

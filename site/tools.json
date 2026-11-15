@@ -1,0 +1,47 @@
+{
+  "tools": [
+    {
+      "id": "short-links",
+      "name": "QR codes & short links",
+      "description": "Create a durable classroom QR code and propose a new or updated short link.",
+      "url": "./links/",
+      "tag": "New"
+    },
+    {
+      "id": "soundboard",
+      "name": "Class Instants",
+      "description": "Trigger classroom sound effects quickly from a keyboard-friendly soundboard.",
+      "url": "https://andrewandrade.ca/soundboard/",
+      "tag": "Classroom"
+    },
+    {
+      "id": "sos",
+      "name": "SOS — Search Oriented Shortcut",
+      "description": "Share a playful, theatrical AI search demonstration that eventually opens Google.",
+      "url": "https://andrewandrade.ca/sos/",
+      "tag": "Demo"
+    },
+    {
+      "id": "plate-builder",
+      "name": "Fabrication Plate Builder",
+      "description": "Lay out measured openings and export a true-size SVG for fabrication.",
+      "url": "https://andrewandrade.ca/tech-edu-resources/design-fabrication/tools/plate-builder/",
+      "tag": "Fabrication"
+    },
+    {
+      "id": "leg-builder",
+      "name": "Laser-Cut Leg & Support Builder",
+      "description": "Configure flat-cut supports and preview how they assemble before fabrication.",
+      "url": "https://andrewandrade.ca/tech-edu-resources/design-fabrication/tools/leg-builder/",
+      "tag": "Fabrication"
+    },
+    {
+      "id": "nice-design",
+      "name": "S.O. N.I.C.E. Design Process",
+      "description": "Build and export a structured design brief, investigation, and evaluation report.",
+      "url": "https://andrewandrade.ca/tech-edu-resources/design-fabrication/01-nice-design-process/",
+      "tag": "Planning"
+    }
+  ]
+}
+

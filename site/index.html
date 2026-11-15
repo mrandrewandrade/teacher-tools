@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Small, practical classroom and fabrication tools by Andrew Andrade.">
+  <meta name="theme-color" content="#14281f">
+  <title>Teacher Tools — Andrew Andrade</title>
+  <link rel="stylesheet" href="./assets/site.css">
+  <script src="./assets/gallery.js" type="module"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="./" aria-label="Teacher Tools home">AA<span>/tools</span></a>
+    <a class="quiet-link" href="https://andrewandrade.ca/">andrewandrade.ca</a>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">Small tools, ready when class starts</p>
+      <h1 id="page-title">Teacher Tools</h1>
+      <p class="lede">A practical shelf of browser tools for classroom moments, design work, fabrication, and sharing links.</p>
+    </section>
+
+    <section class="tool-section" aria-labelledby="tools-heading">
+      <div class="section-heading">
+        <h2 id="tools-heading">Open a tool</h2>
+        <p id="tool-count" aria-live="polite">Loading the shelf…</p>
+      </div>
+      <div id="tool-grid" class="tool-grid" aria-live="polite">
+        <noscript>
+          <article class="tool-card">
+            <p class="tag">New</p>
+            <h3>QR codes &amp; short links</h3>
+            <p>Create a durable classroom QR code and propose a new or updated short link.</p>
+            <a class="open-link" href="./links/">Open <span aria-hidden="true">↗</span></a>
+          </article>
+        </noscript>
+      </div>
+      <p id="gallery-error" class="notice error" hidden>The tool list could not be loaded. <a href="./links/">Open the QR and short-link tool</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built for quick use, keyboard access, and small screens.</p>
+    <a href="https://github.com/mrandrewandrade/teacher-tools">View the source</a>
+  </footer>
+</body>
+</html>
+
