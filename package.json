@@ -13,7 +13,7 @@
     "qr-code-styling": "1.9.2"
   },
   "devDependencies": {
-    "@playwright/test": "1.56.1",
+    "@playwright/test": "1.65.1",
     "jsqr": "1.4.0",
     "pngjs": "7.0.0"
   },
