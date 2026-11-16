@@ -41,6 +41,7 @@ test("source pages use project-relative assets", async () => {
   const links = await fs.readFile(path.join(root, "site", "links", "index.html"), "utf8");
   assert.match(gallery, /href="\.\/assets\/site\.css"/);
   assert.match(gallery, /src="\.\/assets\/gallery\.js"/);
+  assert.match(gallery, /href="https:\/\/andrewandrade\.ca\/tech-edu-resources\/">Tech Edu Resources<\/a>/);
   assert.match(links, /src="\.\.\/assets\/vendor\/qr-code-styling\.js"/);
   assert.match(links, /href="\.\.\/assets\/links\.css"/);
   assert.doesNotMatch(gallery, /(?:href|src)="\/assets\//);
