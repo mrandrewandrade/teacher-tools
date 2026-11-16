@@ -5,6 +5,7 @@
       "name": "QR codes & short links",
       "description": "Create a durable classroom QR code and propose a new or updated short link.",
       "url": "./links/",
+      "image": "./assets/screenshots/short-links.png",
       "tag": "New"
     },
     {
@@ -12,6 +13,7 @@
       "name": "Class Instants",
       "description": "Trigger classroom sound effects quickly from a keyboard-friendly soundboard.",
       "url": "https://andrewandrade.ca/soundboard/",
+      "image": "./assets/screenshots/soundboard.png",
       "tag": "Classroom"
     },
     {
@@ -19,6 +21,7 @@
       "name": "SOS — Search Oriented Shortcut",
       "description": "Share a playful, theatrical AI search demonstration that eventually opens Google.",
       "url": "https://andrewandrade.ca/sos/",
+      "image": "./assets/screenshots/sos.png",
       "tag": "Demo"
     },
     {
@@ -26,6 +29,7 @@
       "name": "Fabrication Plate Builder",
       "description": "Lay out measured openings and export a true-size SVG for fabrication.",
       "url": "https://andrewandrade.ca/tech-edu-resources/design-fabrication/tools/plate-builder/",
+      "image": "./assets/screenshots/plate-builder.png",
       "tag": "Fabrication"
     },
     {
@@ -33,13 +37,15 @@
       "name": "Laser-Cut Leg & Support Builder",
       "description": "Configure flat-cut supports and preview how they assemble before fabrication.",
       "url": "https://andrewandrade.ca/tech-edu-resources/design-fabrication/tools/leg-builder/",
+      "image": "./assets/screenshots/leg-builder.png",
       "tag": "Fabrication"
     },
     {
       "id": "nice-design",
       "name": "S.O. N.I.C.E. Design Process",
-      "description": "Build and export a structured design brief, investigation, and evaluation report.",
+      "description": "Guide students through a simplified engineering design process and export their work.",
       "url": "https://andrewandrade.ca/tech-edu-resources/design-fabrication/01-nice-design-process/",
+      "image": "./assets/screenshots/nice-design.png",
       "tag": "Planning"
     }
   ]

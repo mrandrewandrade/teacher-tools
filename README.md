@@ -4,7 +4,15 @@ The manifest-driven gallery for `https://andrewandrade.ca/teacher-tools/`, plus 
 
 ## Add a gallery card
 
-Edit [`site/tools.json`](site/tools.json). Each entry needs an `id`, `name`, one-line `description`, `url`, and optional `tag`. The layout is rendered from that one manifest; no HTML changes are required.
+Edit [`site/tools.json`](site/tools.json). Each entry needs an `id`, `name`, one-line `description`, `url`, screenshot `image`, and optional `tag`. The layout is rendered from that one manifest; no HTML changes are required.
+
+Refresh all standardized 960×540 tool screenshots with:
+
+```sh
+npm run capture:screenshots
+```
+
+Relative tool URLs use the live Teacher Tools site by default. Set `TOOL_SCREENSHOT_BASE_URL` to a local preview URL when capturing an unpublished local tool.
 
 ## Local development
 
@@ -14,6 +22,8 @@ npm run test:all
 ```
 
 `npm run build` creates `dist/` and vendors the pinned `qr-code-styling` browser bundle. QR codes use error correction level H, a 24 px quiet zone, optional constrained centre logos, and optional readable URL captions. Browser tests decode the exported PNG both with and without a logo.
+
+The interface reuses the locally hosted Source Sans 3 and Source Code Pro files and the core palette documented by Technological Education Resources.
 
 ## Pull-request integration
 

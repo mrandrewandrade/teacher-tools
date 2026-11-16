@@ -6,6 +6,21 @@ function createCard(tool) {
   const card = document.createElement("article");
   card.className = "tool-card";
 
+  if (tool.image) {
+    const previewLink = document.createElement("a");
+    previewLink.className = "tool-preview";
+    previewLink.href = tool.url;
+    previewLink.setAttribute("aria-label", `Open ${tool.name}`);
+    const preview = document.createElement("img");
+    preview.src = tool.image;
+    preview.alt = "";
+    preview.loading = "lazy";
+    preview.width = 960;
+    preview.height = 540;
+    previewLink.append(preview);
+    card.append(previewLink);
+  }
+
   const tag = document.createElement("p");
   tag.className = "tag";
   tag.textContent = tool.tag || "Tool";

@@ -31,8 +31,10 @@ test("gallery renders all manifest entries and valid open links", async ({ page 
   await page.goto("/teacher-tools/");
   await expect(page.getByRole("heading", { name: "Teacher Tools" })).toBeVisible();
   await expect(page.locator(".tool-card")).toHaveCount(6);
+  await expect(page.locator(".tool-preview img")).toHaveCount(6);
+  await expect.poll(() => page.locator(".tool-preview img").evaluateAll((images) => images.every((image) => image.complete && image.naturalWidth >= 900))).toBe(true);
   await expect(page.getByText("6 tools")).toBeVisible();
-  await expect(page.getByRole("link", { name: /Open/ })).toHaveCount(6);
+  await expect(page.locator(".open-link")).toHaveCount(6);
   expect(failed).toEqual([]);
 });
 

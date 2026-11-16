@@ -7,7 +7,7 @@
 .qr-panel,
 .proposal-panel {
   border: 1px solid var(--line);
-  border-top: .3rem solid var(--gold);
+  border-top: .3rem solid var(--accent);
   border-radius: .25rem;
   background: rgb(255 253 252 / 95%);
   box-shadow: var(--shadow);
@@ -35,8 +35,8 @@ input[aria-invalid="true"] { border-color: #923b45; box-shadow: 0 0 0 .14rem rgb
 .slug-field span { display: flex; align-items: center; padding: .75rem 0 .75rem .85rem; color: var(--muted); white-space: nowrap; }
 .slug-field input { min-width: 7rem; padding-left: .1rem; border: 0; border-radius: 0; outline: 0 !important; box-shadow: none !important; }
 
-.preview-box { margin: .4rem 0 1rem; padding: 1rem; border-left: .25rem solid var(--gold); border-radius: .25rem; background: var(--ivory); }
-.preview-box > span { display: block; color: var(--muted); font-size: .75rem; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+.preview-box { margin: .4rem 0 1rem; padding: 1rem; border-left: .25rem solid var(--accent); border-radius: .25rem; background: var(--ivory); }
+.preview-box > span { display: block; color: var(--muted); font-family: var(--code); font-size: .75rem; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; }
 .preview-box output { display: block; margin-top: .2rem; font-weight: 850; overflow-wrap: anywhere; }
 .preview-box p { margin: .35rem 0 0; color: var(--muted); font-size: .85rem; }
 
@@ -50,7 +50,7 @@ fieldset { display: grid; gap: .7rem; margin: 0 0 1rem; padding: 1rem; border: 1
 .qr-stage canvas, .qr-stage svg { display: block; max-width: 100%; height: auto; }
 #qr-code:empty { display: none; }
 #qr-empty { max-width: 18rem; color: var(--muted); }
-#qr-label { max-width: 21rem; margin: .65rem 0 0; color: #000; font: 700 .72rem/1.3 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
+#qr-label { max-width: 21rem; margin: .65rem 0 0; color: #000; font: 650 .72rem/1.3 var(--code); overflow-wrap: anywhere; }
 .button-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .status-message { min-height: 1.5rem; margin: .7rem 0 0; color: var(--muted); font-size: .88rem; }
 
@@ -58,7 +58,7 @@ fieldset { display: grid; gap: .7rem; margin: 0 0 1rem; padding: 1rem; border: 1
 .proposal-panel p { max-width: 48rem; }
 .proposal-actions { display: grid; justify-items: start; }
 .pr-result { margin-top: .8rem; font-weight: 850; }
-code { overflow-wrap: anywhere; }
+code { font-family: var(--code); overflow-wrap: anywhere; }
 
 @media (max-width: 58rem) {
   .link-layout, .proposal-panel { grid-template-columns: 1fr; }
